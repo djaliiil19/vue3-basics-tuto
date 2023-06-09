@@ -2,11 +2,6 @@
   <div
     class="h-screen w-full flex gap-4 justify-center items-center"
   >
-    <h1
-        class="text-5xl"
-    >
-      Hello world
-    </h1>
     <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
          width="70px" height="70px" viewBox="0 0 64 64" enable-background="new 0 0 64 64" xml:space="preserve">
         <g>
@@ -77,10 +72,19 @@
           <path fill-rule="evenodd" clip-rule="evenodd" fill="#394240" d="M32,20.002c-0.553,0-1,0.447-1,1s0.447,1,1,1
             c5.522,0,10,4.477,10,10c0,0.553,0.447,1,1,1s1-0.447,1-1C44,25.375,38.627,20.002,32,20.002z"/>
         </g>
-        </svg>
+    </svg>
+    <h1
+        class="text-5xl"
+    >
+      Hello world, {{ name }}
+    </h1>
   </div>
 </template>
 
 <script setup>
+
+import {ref} from "vue";
+
+let name = ref('developer')
 
 </script>
