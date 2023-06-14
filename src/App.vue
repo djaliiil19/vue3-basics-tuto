@@ -12,16 +12,16 @@
           v-for="item in items"
           :key="item.id"
       >
-        {{ item.value }}
+        {{item.id}}-{{ item.value  }}
       </li>
     </ul>
   </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 
-const items = ref([
+const items = reactive([
   {id: 1, value: 'Item 1'},
   {id: 2, value: 'Item 2'},
   {id: 3, value: 'Item 3'},
