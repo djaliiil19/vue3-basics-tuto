@@ -1,6 +1,6 @@
 
 <template>
-  <label >username :  {{username}}</label>
+  <label >username :  {{usernameLength}}</label>
   <input
       class="w-1/2"
       :value="username"
@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
 
 
 const emits = defineEmits([
@@ -23,8 +23,21 @@ const props = defineProps({
   }
 })
 
+let usernameLength = ref(props.username.length)
+//let _username = ref(props.username)
+
+watch(
+    () => props.username,
+    (newVal, oldValue) => {
+      console.log('username was changed ', newVal, oldValue)
+      usernameLength.value = newVal.toString().length
+    },
+    // {
+    //   immediate: true
+    // }
+)
+
 function handleChangeComponent(e) {
-  console.log(123, e.target.value)
   emits('handle-change', e.target.value)
 }
 
