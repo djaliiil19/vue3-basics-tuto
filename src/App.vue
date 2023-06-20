@@ -1,20 +1,27 @@
 <template>
   <div
-    class="h-screen w-full flex gap-4 justify-center items-center"
+    class="h-screen w-full flex flex-col gap-4 justify-center items-center"
   >
-    <div>
-      <label >Celsius :  </label>
-      <input
-          class="w-1/2"
-          v-model="state.celsius"
-      />
-    </div>
-    <div>
-      <label >Fahrenheit :  </label>
-      <input
-          class="w-1/2"
-          v-model="state.fahrenheit"
-      />
+    <h1
+      class="text-4xl text-bold"
+    >
+      Temperature converter
+    </h1>
+    <div class="flex">
+      <div>
+        <label >Celsius :  </label>
+        <input
+            class="w-1/2 border-2"
+            v-model="state.celsius"
+        />
+      </div>
+      <div>
+        <label >Fahrenheit :  </label>
+        <input
+            class="w-1/2 border-2"
+            v-model="state.fahrenheit"
+        />
+      </div>
     </div>
   </div>
 
