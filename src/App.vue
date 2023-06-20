@@ -2,21 +2,31 @@
   <div
     class="h-screen w-full flex gap-4 justify-center items-center"
   >
-<!--    <label >username :  {{usernameLength}}</label>-->
-<!--    <input-->
-<!--      class="w-1/2"-->
-<!--      v-model="username"-->
-<!--    />-->
+    <div>
+      <label >Celsius :  </label>
+      <input
+          class="w-1/2"
+          v-model="celsius"
+      />
+    </div>
+    <div>
+      <label >Fahrenheit :  </label>
+      <input
+          class="w-1/2"
+          v-model="fahrenheit"
+      />
+    </div>
+
 <!-- Solution 2 !: remplace v-model : pour gerer l'evenement mannuallemnet-->
 <!--    <input-->
 <!--      class="w-1/2"-->
 <!--      :value="username"-->
 <!--      @input="handleChange"-->
 <!--    />-->
-  <MyInput
-    :username="username"
-    @handle-change="handleChangeParent"
-  />
+<!--  <MyInput-->
+<!--    :username="username"-->
+<!--    @handle-change="handleChangeParent"-->
+<!--  />-->
   </div>
 
   <div
@@ -45,7 +55,35 @@
 import {computed, reactive, ref, watch} from "vue";
 import MyInput from "@/components/MyInput.vue";
 
+// let celsius = ref(0)
+// let fahrenheit = ref(32)
+
+const state = reactive({
+  celsius: 0,
+  fahrenheit: 32
+});
+
+const celsius = computed({
+  get: () => state.celsius,
+  set: (newValue) => {
+    state.celsius = newValue;
+    state.fahrenheit = (newValue * 9) / 5 + 32;
+  }
+});
+
+const fahrenheit = computed({
+  get: () => state.fahrenheit,
+  set: (newValue) => {
+    state.fahrenheit = newValue;
+    state.celsius = ((newValue - 32) * 5) / 9;
+  }
+});
+
 let username = ref('hani')
+let firstName = ref('')
+let lastName = ref('')
+let test = ref()
+//let fullName = ref(firstName.value + ' ' + lastName.value)
 
 // SOlution 2: remplace v-model : pour gerer l'evenement mannuallemnet
 // function handleChange(e) {
@@ -63,16 +101,20 @@ let num = ref({
   b: 0,
 })
 
-watch(
-    num,
-    (newVal, oldVal) => {
-      console.log(`******** `, newVal, oldVal)
-      sum.value = parseInt(newVal.a) + parseInt(newVal.b)
-    },
-    {
-      deep: true
-    }
+
+const fullName = computed(
+    () => firstName.value + ' ' + lastName.value,
+    // (val) => {
+    //   test.value = val
+    // }
 )
+// watch(
+//     [firstName, lastName],
+//     ([newA, newB], [oldA, oldB]) => {
+//       console.log(newA, newB)
+//       fullName.value = newA + ' ' + newB
+//     }
+// )
 
 // watch(
 //     [a, b],
