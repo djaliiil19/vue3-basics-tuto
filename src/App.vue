@@ -6,136 +6,73 @@
       <label >Celsius :  </label>
       <input
           class="w-1/2"
-          v-model="celsius"
+          v-model="state.celsius"
       />
     </div>
     <div>
       <label >Fahrenheit :  </label>
       <input
           class="w-1/2"
-          v-model="fahrenheit"
+          v-model="state.fahrenheit"
       />
     </div>
-
-<!-- Solution 2 !: remplace v-model : pour gerer l'evenement mannuallemnet-->
-<!--    <input-->
-<!--      class="w-1/2"-->
-<!--      :value="username"-->
-<!--      @input="handleChange"-->
-<!--    />-->
-<!--  <MyInput-->
-<!--    :username="username"-->
-<!--    @handle-change="handleChangeParent"-->
-<!--  />-->
   </div>
 
-  <div
-      class="h-screen w-full flex gap-4 justify-center items-center"
-  >
-    <div>
-      <label >a : </label>
-      <input
-          class="w-1/2"
-          v-model="num.a"
-      />
-    </div>
-    <div>
-      <label >b : </label>
-      <input
-          class="w-1/2"
-          v-model="num.b"
-      />
-    </div>
-    a + b = {{ sum }}
-  </div>
 </template>
 
 <script setup>
 
 import {computed, reactive, ref, watch} from "vue";
-import MyInput from "@/components/MyInput.vue";
-
-// let celsius = ref(0)
-// let fahrenheit = ref(32)
 
 const state = reactive({
   celsius: 0,
-  fahrenheit: 32
+  fahrenheit: 32,
+  fromFahrenheitWatcher: false,
+  fromCelsiusWatcher: false
 });
 
-const celsius = computed({
-  get: () => state.celsius,
-  set: (newValue) => {
-    state.celsius = newValue;
-    state.fahrenheit = (newValue * 9) / 5 + 32;
-  }
-});
-
-const fahrenheit = computed({
-  get: () => state.fahrenheit,
-  set: (newValue) => {
-    state.fahrenheit = newValue;
-    state.celsius = ((newValue - 32) * 5) / 9;
-  }
-});
-
-let username = ref('hani')
-let firstName = ref('')
-let lastName = ref('')
-let test = ref()
-//let fullName = ref(firstName.value + ' ' + lastName.value)
-
-// SOlution 2: remplace v-model : pour gerer l'evenement mannuallemnet
-// function handleChange(e) {
-//   console.log(123, e.target.value)
-//   username.value = e.target.value
-// }
-
-
-let usernameLength = ref(username.value.length)
-let a = ref(0)
-let b = ref(0)
-let sum = ref(0)
-let num = ref({
-  a: 0,
-  b: 0,
-})
-
-
-const fullName = computed(
-    () => firstName.value + ' ' + lastName.value,
-    // (val) => {
-    //   test.value = val
-    // }
+watch(
+    () => state.celsius,
+    (newVal, oldVal) => {
+      if(!state.fromFahrenheitWatcher) {
+        console.log(111)
+        state.fahrenheit = (newVal * 9) / 5 + 32
+        state.fromFahrenheitWatcher = true
+        state.fromCelsiusWatcher = true
+      }
+      else
+        state.fromFahrenheitWatcher = false
+    }
 )
-// watch(
-//     [firstName, lastName],
-//     ([newA, newB], [oldA, oldB]) => {
-//       console.log(newA, newB)
-//       fullName.value = newA + ' ' + newB
-//     }
-// )
+watch(
+    () => state.fahrenheit,
+    (newVal, oldVal) => {
+      if(!state.fromCelsiusWatcher) {
+        console.log(222)
+        state.celsius = ((newVal - 32) * 5) / 9
+        state.fromCelsiusWatcher = true
+        state.fromFahrenheitWatcher = true
+      }
+      else
+        state.fromCelsiusWatcher = false
+    }
+)
 
-// watch(
-//     [a, b],
-//     ([newA, newB], [oldA, oldB]) => {
-//       console.log(` **********  ${newB} ** ${oldB}  ********`)
-//       sum.value = parseInt(newA) + parseInt(newB)
-//     },
-// )
+// const celsius = computed({
+//   get: () => state.celsius,
+//   set: (newValue) => {
+//     state.celsius = newValue;
+//     state.fahrenheit = (newValue * 9) / 5 + 32;
+//   }
+// });
 //
-// watch(
-//     username,
-//     (newVal, oldVal) => {
-//       console.log('username was changed: ', newVal, oldVal)
-//       usernameLength.value = newVal.length
-//     }
-// )
+// const fahrenheit = computed({
+//   get: () => state.fahrenheit,
+//   set: (newValue) => {
+//     state.fahrenheit = newValue;
+//     state.celsius = ((newValue - 32) * 5) / 9;
+//   }
+// });
 
-
-
-function handleChangeParent (val){
-  username.value = val
-}
 
 </script>
