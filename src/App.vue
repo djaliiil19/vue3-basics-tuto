@@ -1,12 +1,7 @@
 <template>
-  <Child
-    v-if="render"
-  />
+  <Index />
 </template>
 
 <script setup>
-import Child from "@/Child.vue";
-import {ref} from "vue";
-
-const render = ref(true)
+import Index from "@/Pages/Index.vue";
 </script>
