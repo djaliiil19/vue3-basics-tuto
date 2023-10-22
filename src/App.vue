@@ -36,18 +36,19 @@
       <label >a : </label>
       <input
           class="w-1/2"
-          v-model="num.a"
+          v-model="a"
       />
     </div>
     <div>
       <label >b : </label>
       <input
           class="w-1/2"
-          v-model="num.b"
+          v-model="b"
       />
     </div>
-    a + b = {{ sum }}
+    a + b = {{ sumComputed }}
   </div>
+  {{testtest}}
 </template>
 
 <script setup>
@@ -63,9 +64,12 @@ const state = reactive({
   fahrenheit: 32
 });
 
+const sumComputed = computed(() => ((parseInt(a.value) ?? 0) + (parseInt(b.value) ?? 0)))
+
 const celsius = computed({
   get: () => state.celsius,
   set: (newValue) => {
+    console.log('Celsus Computed')
     state.celsius = newValue;
     state.fahrenheit = (newValue * 9) / 5 + 32;
   }
@@ -119,10 +123,14 @@ const fullName = computed(
 // watch(
 //     [a, b],
 //     ([newA, newB], [oldA, oldB]) => {
-//       console.log(` **********  ${newB} ** ${oldB}  ********`)
 //       sum.value = parseInt(newA) + parseInt(newB)
-//     },
+//     }
 // )
+
+// ([newA, newB], [oldA, oldB]) => {
+//   console.log(` **********  ${newB} ** ${oldB}  ********`)
+//   sum.value = parseInt(newA) + parseInt(newB)
+// },
 //
 // watch(
 //     username,
