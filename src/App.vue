@@ -15,7 +15,6 @@
     <SlotChild
         title="Child Title"
     >
-
       <template v-slot:header>
         <div>
           header
