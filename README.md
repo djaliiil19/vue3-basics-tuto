@@ -19,3 +19,9 @@ npm run build
 ```
 npm create vite@latest
 ```
+
+## Json Server
+```
+npm install json-server -g
+json-server data.json
+```
