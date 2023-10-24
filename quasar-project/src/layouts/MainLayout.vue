@@ -15,7 +15,12 @@
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-icon
+          name="logout"
+          size="md"
+          class="hover:cursor-pointer hover:bg-gray-200 hover:bg-opacity-20 rounded-full p-2"
+          @click="logout"
+        />
       </q-toolbar>
     </q-header>
 
@@ -48,6 +53,8 @@
 <script>
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import {useAuthStore} from "stores/auth";
+import {useRouter} from "vue-router";
 
 const linksList = [
   {
@@ -104,12 +111,22 @@ export default defineComponent({
   setup () {
     const leftDrawerOpen = ref(false)
 
+    const authStore = useAuthStore()
+    const router = useRouter()
+    const logout = () => {
+      authStore.logout()
+      router.push('/login')
+      // OR
+      // router.push({name: 'login'})
+    }
+
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
+      logout
     }
   }
 })
