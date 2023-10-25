@@ -3,4 +3,5 @@
 
 export default {
   'prod-title': 'List of products',
+  'change-lang-msg': 'Language changed to English !',
 }

@@ -198,8 +198,23 @@ import {nextTick, onBeforeMount, ref, watch} from "vue";
 import {api} from "boot/axios";
 import {useAuthStore} from "stores/auth";
 import Modal from "components/Modal.vue";
-import {useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
+import {useQuasar} from "quasar";
+
+const t = useI18n()
+const $q = useQuasar()
+
+watch(
+  () => t.locale.value,
+  (newVal) => {
+    console.log('Lang watch : ', t)
+    $q.notify({
+      message: t.t('change-lang-msg'),
+      caption: '5 minutes ago',
+      color: 'primary'
+    })
+  }
+)
 
 const columns = [
   { name: 'action', align: 'center', label: 'Action' },
@@ -223,7 +238,6 @@ const productToBeAdded = ref({
   price: 0,
 })
 
-const t = useI18n()
 
 const pagination = ref({
   page: 1,
