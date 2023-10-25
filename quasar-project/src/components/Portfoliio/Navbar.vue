@@ -20,17 +20,17 @@
       class="flex justify-between items-center text-secondary-900 w-3/5"
     >
         <span
-          class="text-xl"
+          class="text-[25px]"
         >
           About
         </span>
       <span
-        class="text-xl"
+        class="text-[25px]"
       >
           Passions
         </span>
       <span
-        class="text-xl"
+        class="text-[25px]"
       >
           Portfolio
         </span>
