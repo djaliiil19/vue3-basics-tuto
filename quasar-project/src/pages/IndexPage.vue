@@ -99,11 +99,11 @@
       <!--      -->
 
     </q-table>
-    <q-btn
-      :label="t.locale.value"
+
+    <q-select
+      v-model="t.locale.value"
+      :options="['en-US', 'fr-FR', 'ar-AR']"
       class="fixed bottom-4 left-4"
-      @click="changeLang"
-      no-caps
     />
     <Modal
       :show="addModal"
@@ -224,14 +224,6 @@ const productToBeAdded = ref({
 })
 
 const t = useI18n()
-
-const changeLang = () => {
-  console.log('Lang : ', t.locale.value)
-  if (t.locale.value == 'en-US')
-    t.locale.value = 'ar-AR'
-  else if (t.locale.value == 'ar-AR')
-    t.locale.value = 'en-US'
-}
 
 const pagination = ref({
   page: 1,
