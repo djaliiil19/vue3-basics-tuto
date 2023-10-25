@@ -2,11 +2,12 @@
   <q-page class="flex flex-col px-8 py-4 gap-4">
     <div
       class="w-full flex justify-between"
+      :class="{'flex-row-reverse': t.locale.value == 'ar-AR'}"
     >
       <h1
         class="text-3xl font-bold"
       >
-        List of products
+        {{ $t('prod-title') }}
       </h1>
       <q-btn
         color="blue"
@@ -16,11 +17,12 @@
       />
     </div>
     <div
-      class="flex justify-end"
+      class="flex"
+      :class="{'justify-start': t.locale.value == 'ar-AR', 'justify-end': t.locale.value != 'ar-AR'}"
     >
       <q-input
         class=""
-        label="Search"
+        :label="t.locale.value == 'ar-AR' ? 'بحث' : 'Search'"
         v-model="search"
         clearable
       />
@@ -97,6 +99,12 @@
       <!--      -->
 
     </q-table>
+    <q-btn
+      :label="t.locale.value"
+      class="fixed bottom-4 left-4"
+      @click="changeLang"
+      no-caps
+    />
     <Modal
       :show="addModal"
       title="New product"
@@ -191,6 +199,7 @@ import {api} from "boot/axios";
 import {useAuthStore} from "stores/auth";
 import Modal from "components/Modal.vue";
 import {useRouter} from "vue-router";
+import {useI18n} from "vue-i18n";
 
 const columns = [
   { name: 'action', align: 'center', label: 'Action' },
@@ -213,6 +222,16 @@ const productToBeAdded = ref({
   image: '',
   price: 0,
 })
+
+const t = useI18n()
+
+const changeLang = () => {
+  console.log('Lang : ', t.locale.value)
+  if (t.locale.value == 'en-US')
+    t.locale.value = 'ar-AR'
+  else if (t.locale.value == 'ar-AR')
+    t.locale.value = 'en-US'
+}
 
 const pagination = ref({
   page: 1,
@@ -276,6 +295,7 @@ const fetchProducts = async () => {
       console.error(err)
     })
 }
+
 
 onBeforeMount(async () => {
   await fetchProducts()
