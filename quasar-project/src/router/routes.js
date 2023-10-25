@@ -12,6 +12,10 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue') },
     ]
   },
+  {
+    path: '/portfolio',
+    component: () => import('pages/Portfolio.vue'),
+  },
 
   // Always leave this as last one,
   // but you can also remove it
