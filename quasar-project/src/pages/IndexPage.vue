@@ -15,12 +15,24 @@
         @click="addModal = true"
       />
     </div>
+    <div
+      class="flex justify-end"
+    >
+      <q-input
+        class=""
+        label="Search"
+        v-model="search"
+        clearable
+      />
+    </div>
     <q-table
+      v-if="renderTable"
       title="Products"
       :rows="products"
       :columns="columns"
       wrap-cells
       row-key="name"
+      :rows-per-page-options="[pagination.per_page]"
     >
       <template v-slot:body="props">
         <q-tr :props="props">
@@ -48,7 +60,7 @@
             {{ props.row.name }}
           </q-td>
           <q-td key="description" :props="props">
-            {{ props.row.description }}
+<!--            {{ props.row.description }}-->
           </q-td>
           <q-td key="price" :props="props">
             <q-badge color="purple">
@@ -57,6 +69,33 @@
           </q-td>
         </q-tr>
       </template>
+
+      <!--   Pagination   -->
+
+
+      <template v-slot:pagination>
+        <div class="paginationflex paginationitems-center paginationgap-2 paginationmx-4">
+          <label>Nombre de produits par page</label>
+          <q-select
+            v-model="pagination.per_page"
+            :options="[5, 10, 15]"
+            outlined
+            dense
+            flat
+          />
+        </div>
+        <q-pagination
+          v-model="pagination.page"
+          color="black"
+          :min="1"
+          :max="pagination.lastPage"
+          :max-pages="pagination.lastPage"
+          :input="true"
+        />
+      </template>
+
+      <!--      -->
+
     </q-table>
     <Modal
       :show="addModal"
@@ -113,6 +152,12 @@
           type="textarea"
           v-model="productToBeEdited.description"
         />
+        <input
+          class="w-full"
+          label="Image"
+          type="file"
+          @change="uploadImage"
+        />
         <q-input
           class="w-full"
           label="Price"
@@ -141,10 +186,11 @@
 
 <script setup>
 
-import {onBeforeMount, ref} from "vue";
+import {nextTick, onBeforeMount, ref, watch} from "vue";
 import {api} from "boot/axios";
 import {useAuthStore} from "stores/auth";
 import Modal from "components/Modal.vue";
+import {useRouter} from "vue-router";
 
 const columns = [
   { name: 'action', align: 'center', label: 'Action' },
@@ -153,8 +199,10 @@ const columns = [
   { name: 'price', align: 'center', label: 'Price', field: 'price', sortable: true },
 ]
 const products = ref([])
+const renderTable = ref(true)
 const confirmDeleteDialog = ref(false)
 const editProductLoading = ref(false)
+const search = ref('')
 const addModal = ref(false)
 const editModal = ref(false)
 const productToBeDeleted = ref(null)
@@ -165,18 +213,64 @@ const productToBeAdded = ref({
   image: '',
   price: 0,
 })
+
+const pagination = ref({
+  page: 1,
+  per_page: 5,
+  lastPage: 1,
+})
+
+
+const test = new FormData()
 const authStore = useAuthStore()
+
+watch(
+  search,
+  async (newVal, oldVal) => {
+    if((newVal == null) || (newVal.length == 0) || (newVal.length >= 4)){
+      await fetchProducts()
+      renderTable.value = false
+      await nextTick()
+      renderTable.value = true
+    }
+  }
+)
+
+watch(
+  ()=> [pagination.value.page, pagination.value.per_page],
+  async (newVal, oldVal) => {
+    console.log(newVal, oldVal)
+    await fetchProducts()
+  },
+  {
+    deep: true,
+  }
+);
+
+const uploadImage = (e) => {
+  console.log('uploadImage : ', e.target.files)
+  productToBeEdited.image = e.target.files[0]
+  test.append('image', e.target.files[0])
+}
 
 const fetchProducts = async () => {
   await api
     .get('/products', {
       headers: {
-        Authorization: `Bearer ${authStore.token}`
+        Authorization: `Bearer ${authStore.token}`,
+      },
+      params: {
+        search: search.value,
+        per_page: pagination.value.per_page,
+        page: pagination.value.page,
+        lastPage: pagination.value.lastPage,
       }
     })
     .then((res) => {
-      console.table(res.data.products)
-      products.value = res.data.products
+      console.table(res.data.data)
+      products.value = res.data.data
+      pagination.value.page = res.data.current_page
+      pagination.value.lastPage = res.data.last_page
     })
     .catch((err) => {
       console.error(err)
