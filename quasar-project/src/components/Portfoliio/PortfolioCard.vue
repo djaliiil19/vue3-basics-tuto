@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex flex-col items-center justify-center rounded-[13px] pb-1 pr-1 pt-4 pl-4 shadow-2xl"
+    class="relative flex flex-col items-center justify-center rounded-[13px] pb-1 pr-1 pt-4 pl-4 shadow-2xl min-h-[260px]"
   >
     <img class="absolute top-3 left-3" :src="item.background">
     <div

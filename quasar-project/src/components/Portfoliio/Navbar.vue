@@ -19,23 +19,23 @@
     <div
       class="flex justify-between items-center text-secondary-900 w-3/5"
     >
-        <span
-          class="text-[25px]"
+        <a
+          class="text-[25px] hover:cursor-pointer hover:scale-105"
         >
           About
-        </span>
-      <span
-        class="text-[25px]"
-      >
+        </a>
+        <a
+          class="text-[25px] hover:cursor-pointer hover:scale-105"
+        >
           Passions
-        </span>
-      <span
-        class="text-[25px]"
-      >
+        </a>
+        <a
+          class="text-[25px] hover:cursor-pointer hover:scale-105"
+        >
           Portfolio
-        </span>
+        </a>
       <button
-        class="bg-primary-300 text-white text-lg px-4 py-1.5 rounded-lg drop-shadow-lg"
+        class="bg-primary-300 text-white text-lg px-4 py-1.5 rounded-lg drop-shadow-lg hover:cursor-pointer hover:scale-105"
       >
         Contact Me
       </button>

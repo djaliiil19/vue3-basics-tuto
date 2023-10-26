@@ -3,7 +3,7 @@
     class="w-full flex flex-col items-center pt-8 gap-24"
   >
     <div
-      class="flex flex-col items-center px-36"
+      class="flex flex-col items-center px-36 gap-24"
     >
       <div
         class="w-full flex flex-col items-center bg-white gap-8"
@@ -32,6 +32,7 @@
           class="flex justify-between items-center w-full"
         >
           <Passion
+            class="hover:scale-105 hover:rotate-2"
             v-for="passion in passions"
             :passion="passion"
           />
@@ -55,9 +56,10 @@
         </span>
         </div>
         <div
-          class="flex justify-between items-center w-full"
+          class="flex justify-between gap-4 items-center w-full"
         >
           <PortfolioCard
+            class="hover:scale-105 hover:rotate-2"
             v-for="item in portfolio"
             :item="item"
           />
