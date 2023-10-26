@@ -1,41 +1,71 @@
 <template>
   <div
-    class="w-full flex flex-col items-center px-36 py-8 gap-24"
+    class="w-full flex flex-col items-center pt-8 gap-24"
   >
     <div
-      class="w-full flex flex-col items-center bg-white gap-8"
-    >
-      <Navbar />
-      <Hero />
-    </div>
-    <div
-      class="w-full flex flex-col items-center gap-8"
+      class="flex flex-col items-center px-36"
     >
       <div
-        class="flex gap-2 text-[35px]"
+        class="w-full flex flex-col items-center bg-white gap-8"
       >
+        <Navbar />
+        <Hero />
+      </div>
+      <div
+        class="w-full flex flex-col items-center gap-8"
+      >
+        <div
+          class="flex gap-2 text-[35px]"
+        >
         <span
           class="text-primary-200"
         >
           Additional
         </span>
-        <span
-          class="text-primary-100 font-black"
-        >
+          <span
+            class="text-primary-100 font-black"
+          >
           Passions
         </span>
+        </div>
+        <div
+          class="flex justify-between items-center w-full"
+        >
+          <Passion
+            v-for="passion in passions"
+            :passion="passion"
+          />
+        </div>
       </div>
       <div
-        class="flex justify-between items-center w-full"
+        class="w-full flex flex-col items-center gap-8"
       >
-        <Passion
-          v-for="passion in passions"
-          :passion="passion"
-        />
+        <div
+          class="flex gap-2 text-[35px]"
+        >
+        <span
+          class="text-primary-200"
+        >
+          My
+        </span>
+          <span
+            class="text-primary-100 font-black"
+          >
+          Portfolio
+        </span>
+        </div>
+        <div
+          class="flex justify-between items-center w-full"
+        >
+          <PortfolioCard
+            v-for="item in portfolio"
+            :item="item"
+          />
+        </div>
       </div>
     </div>
     <div
-      class="w-full flex flex-col items-center gap-8"
+      class="relative w-full h-screen flex flex-col items-center gap-8"
     >
       <div
         class="flex gap-2 text-[35px]"
@@ -43,22 +73,32 @@
         <span
           class="text-primary-200"
         >
-          My
+          Contact
         </span>
         <span
           class="text-primary-100 font-black"
         >
-          Portfolio
+          Me
         </span>
       </div>
       <div
-        class="flex justify-between items-center w-full"
+        class="flex justify-between items-center w-full px-36"
       >
-        <PortfolioCard
-          v-for="item in portfolio"
-          :item="item"
+        <ContactLink
+          v-for="link in contactLinks"
+          :link="link"
         />
       </div>
+      <img
+        class="w-full absolute bottom-0"
+        src="portfolio/Vector.png"
+        alt="portfolio/Vector.png"
+      />
+      <h1
+        class="w-full text-center absolute bottom-0 text-white text-[35px]"
+      >
+        Designed By Rauliqbal
+      </h1>
     </div>
   </div>
 </template>
@@ -70,6 +110,7 @@ import Hero from "components/Portfoliio/Hero.vue";
 import {ref} from "vue";
 import Passion from "components/Portfoliio/Passion.vue";
 import PortfolioCard from "components/Portfoliio/PortfolioCard.vue";
+import ContactLink from "components/Portfoliio/ContactLink.vue";
 
 
 const passions = ref([
@@ -116,6 +157,31 @@ const portfolio = ref([
     image: 'portfolio/Edtech 1.png',
     background: 'portfolio/Ellipse 6-2.png',
     imageHeader: 'portfolio/BeatsLearning.png',
+  },
+])
+
+const contactLinks = ref([
+  {
+    text: 'Github',
+    image: 'portfolio/github.png',
+    link: 'https://www.github.com'
+  },
+  {
+    text: 'Instagram',
+    image: 'portfolio/instagram.png',
+    link: 'https://www.instagram.com'
+  },
+  {
+    text: 'Email',
+    image: 'portfolio/email.png',
+    link: 'bouzidi.abdeldjalil@gmail.com',
+    isEmail: true
+  },
+  {
+    text: 'Phone',
+    image: 'portfolio/phone.png',
+    link: '213566913283',
+    isPhone: true
   },
 ])
 
