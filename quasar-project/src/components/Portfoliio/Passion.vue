@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col items-center justify-center rounded-[13px] px-10 py-4 shadow-2xl"
+    class="flex flex-col items-center justify-center rounded-[13px] px-10 py-4 shadow-2xl mx-auto my-auto"
   >
     <img :src="passion.image">
     <div
