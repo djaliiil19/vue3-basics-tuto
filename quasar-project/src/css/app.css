@@ -2,3 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@media (max-width: 767px) {
+  .hidden_md {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hidden_lg {
+    display: none;
+  }
+}

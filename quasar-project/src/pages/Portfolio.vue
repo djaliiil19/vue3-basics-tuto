@@ -3,12 +3,15 @@
     class="w-full flex flex-col items-center pt-8 gap-24"
   >
     <div
-      class="flex flex-col items-center px-36 gap-24"
+      class="flex flex-col items-center px-8 md:px-36 gap-24"
     >
       <div
         class="w-full flex flex-col items-center bg-white gap-8"
       >
-        <Navbar />
+        <Navbar
+          :contact="contact"
+          @goto="goTo"
+        />
         <Hero />
       </div>
       <div
@@ -29,10 +32,10 @@
         </span>
         </div>
         <div
-          class="flex justify-between items-center w-full"
+          class="flex justify-between flex-col md:flex-row items-center w-full"
         >
           <Passion
-            class="hover:scale-105 hover:rotate-2"
+            class="hover:scale-105 hover:rotate-2 delay-150 duration-300 ease-in-out"
             v-for="passion in passions"
             :passion="passion"
           />
@@ -56,10 +59,10 @@
         </span>
         </div>
         <div
-          class="flex justify-between gap-4 items-center w-full"
+          class="flex justify-between flex-col md:flex-row gap-4 items-center w-full"
         >
           <PortfolioCard
-            class="hover:scale-105 hover:rotate-2"
+            class="hover:scale-105 hover:rotate-2 delay-150 duration-300 ease-in-out"
             v-for="item in portfolio"
             :item="item"
           />
@@ -67,10 +70,11 @@
       </div>
     </div>
     <div
-      class="relative w-full h-screen flex flex-col items-center gap-8"
+      ref="contact"
+      class="relative w-full md:h-screen flex flex-row md:flex-col items-center gap-8"
     >
       <div
-        class="flex gap-2 text-[35px]"
+        class="flex gap-2 text-[35px] w-full justify-center"
       >
         <span
           class="text-primary-200"
@@ -84,7 +88,7 @@
         </span>
       </div>
       <div
-        class="flex justify-between items-center w-full px-36"
+        class="flex justify-between flex-col md:flex-row items-center w-full px-8 md:px-36 pb-16 md:pb-0 gap-6 md:gap-2"
       >
         <ContactLink
           v-for="link in contactLinks"
@@ -92,15 +96,15 @@
         />
       </div>
       <img
-        class="w-full absolute bottom-0"
+        class="w-full absolute bottom-0 left-0"
         src="portfolio/Vector.png"
         alt="portfolio/Vector.png"
       />
-      <h1
-        class="w-full text-center absolute bottom-0 text-white text-[35px]"
+      <p
+        class="w-full text-center absolute bottom-0 text-white text-[25px] md:text-[35px]"
       >
         Designed By Rauliqbal
-      </h1>
+      </p>
     </div>
   </div>
 </template>
@@ -186,6 +190,15 @@ const contactLinks = ref([
     isPhone: true
   },
 ])
+
+const contact = ref(null)
+
+const goTo = (section) => {
+  console.log(1111, contact.value)
+  if(section == 'contact')
+    contact.value.scrollIntoView({ behavior: 'smooth' })
+}
+
 
 </script>
 
